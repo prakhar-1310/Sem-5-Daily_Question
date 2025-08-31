@@ -1,7 +1,7 @@
 class Solution {
     public double myPow(double x, int n) {
         // return (double)(Math.pow(x,n));
-        double N = n;
+        long N = n;
         if(N<0){
             N=-N;
             x=1/x;
@@ -9,11 +9,16 @@ class Solution {
         return helper(x,N);
         
     }
-    public static double helper(double x, double n){
+    public static double helper(double x, long n){
         if (n==0){
             return 1;
         }
-        double a = helper(x,n-1);
-        return a*x;
+        double half = helper(x, n / 2);
+        
+        if (n % 2 == 0) {
+            return half * half;
+        } else {
+            return half * half * x;
+        }
     }
 }
