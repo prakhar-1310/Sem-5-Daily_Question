@@ -39,7 +39,8 @@ class Solution {
                     count2++;
                 }
             }
-            ans = Math.max(ans,end-start+1);
+            // ans = Math.max(ans,end-start+1);
+            ans = Math.max(ans,count1+count2);
             end++;
         }
         
