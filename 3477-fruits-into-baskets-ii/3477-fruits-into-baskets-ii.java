@@ -5,7 +5,7 @@ class Solution {
             int flag=0;
             for(int j=0;j<baskets.length;j++){
                 if(fruits[i]<=baskets[j]){
-                    baskets[j]=-1;
+                    baskets[j]=-1; // marking used basket
                     flag=-1;
                     break;
                 }
