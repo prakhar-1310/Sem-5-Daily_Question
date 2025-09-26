@@ -12,7 +12,7 @@ class Solution {
                 low++;
                 high--;
             }
-            else if (nums[low]<=nums[mid]){
+            else if (nums[low]<=nums[mid]){ // means sorted path; < and = because there can are duplicate elements
                 if(nums[low]<=target && nums[mid]>target){
                     high = mid-1;
                 }
