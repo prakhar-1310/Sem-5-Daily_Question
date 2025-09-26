@@ -3,20 +3,29 @@ class Solution {
         return helper(nums,0,nums.length-1,target);
     }
     public int helper(int nums[], int i, int j, int target){
-        if(i>j){
-            return -1;
-        }
-        int mid = (i+j)/2;
-        if(target==nums[mid]){
-            return mid;
-        }
-        int left = helper(nums,i,mid-1,target);
-        int right = helper(nums,mid+1,j,target);
-        if(left!=-1){
-            return left;
-        }
-        if(right != -1){
-            return right;
+        int low = i;
+        int high = j;
+        while (low<=high){
+            int mid = (low+high)/2;
+            if(nums[mid] == target){
+                return mid;
+            }
+            if(nums[low]<=nums[mid]){
+                if(target<nums[mid] && target>=nums[low]){
+                    high = mid-1;
+                }
+                else{
+                    low=mid+1;
+                }
+            }
+            else{
+                if(target>nums[mid] && target<=nums[high]){
+                    low=mid+1;
+                }
+                else{
+                    high=mid-1;
+                }
+            }
         }
         return -1;
     }
