@@ -5,10 +5,14 @@ class Solution {
             map.put(i, map.getOrDefault(i,0)+1);
         }
 
-        List<Character>list = new ArrayList<>(map.keySet());
-        Collections.sort(list, (a,b)->map.get(b)-map.get(a));
+        PriorityQueue<Character>pq = new PriorityQueue<>((a,b)->map.get(b)-map.get(a));
+        for(char i : map.keySet()){
+            pq.add(i);
+        }
+        
         StringBuilder sb = new StringBuilder();
-        for(char i : list){
+        while(!pq.isEmpty()){
+            char i = pq.poll();
             for(int j =0 ;j<map.get(i);j++){
                 sb.append(i);
             }
