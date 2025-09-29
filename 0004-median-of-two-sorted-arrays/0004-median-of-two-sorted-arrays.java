@@ -8,7 +8,7 @@ class Solution {
         int tot= a.length + b.length;
         int half = (tot+1)/2; // handling both even and odd
         int low = 0;
-        int high = a.length;
+        int high = a.length; // al ke left tk ka element lete h, agar al=a.length then all element from array a;
 
         while(low<=high){
             int al = (low+high)/2;
