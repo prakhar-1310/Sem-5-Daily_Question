@@ -1,25 +1,25 @@
 class Solution {
     public List<List<Integer>> combine(int n, int k) {
-        int arr[] = new int[n];
-        for(int i=0;i<n;i++){
+        int arr[] = new int [n];
+        for (int i=0;i<n;i++){
             arr[i]=i+1;
         }
-        List<List<Integer>> ans = new ArrayList<>();
-        List<Integer>list = new ArrayList<>();
-        helper(ans,list,k,0,arr);
+        List <Integer> ll = new ArrayList<>();
+        List <List<Integer>> ans = new ArrayList<>();
+
+        print (arr,ll,ans,k,0);
+
         return ans;
     }
-
-    public void helper(List<List<Integer>>ans,List<Integer>list,int k,int idx,int arr[]){
-        if(list.size()==k){
-            ans.add(new ArrayList<>(list));
+    public static void print(int arr[], List <Integer> ll,List <List<Integer>> ans,int k,int idx){
+        if (ll.size()==k){
+            ans.add(new ArrayList<Integer>(ll));
             return;
         }
-
-        for(int i=idx;i<arr.length;i++){
-            list.add(arr[i]);
-            helper(ans,list,k,i+1,arr);
-            list.remove(list.size()-1);
+        for (int i=idx;i<arr.length;i++){
+            ll.add(arr[i]);
+            print (arr,ll,ans,k,i+1);
+            ll.remove(ll.size()-1);
         }
     }
 }
