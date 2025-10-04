@@ -55,34 +55,30 @@ class Solution {
 
         StringBuilder sb = new StringBuilder();
         for(int i=0;i<dominoes.length();i++){
-            if(right[i]==-1 && left[i]==-1){
-                sb.append('.');
+            if(right[i]==-1 && left[i]==-1){ // means no effect
+                sb.append('.'); 
             }
-            else if(right[i]==-1){
+            else if(right[i]==-1){ // no effect of right push
                 sb.append('L');
             }
-            else if (left[i]==-1){
+            else if (left[i]==-1){ // no effect of left push
                 sb.append('R');
             }
             else{
                 int distfromleft = Math.abs(i-right[i]);// pushing right
                 int distfromright = Math.abs(i-left[i]);//pushing left
 
-                if(distfromleft<distfromright){
+                if(distfromleft<distfromright){ // left push distance is more
                     sb.append('R');
                 }
-                else if(distfromleft>distfromright){
+                else if(distfromleft>distfromright){ // right push distance is more
                     sb.append('L');
                 }
-                else{
+                else{ // have equal distance from left push and right push
                     sb.append('.');
                 }
             }
-
         }
-
         return sb.toString();
-
-
     }
 }
