@@ -22,17 +22,14 @@ class Solution {
             return dp[idx];
         }
 
-        int ans = helper(ques,idx+1,dp);
+        int ans = helper(ques,idx+1,dp); // one character
         
-        if(ques.length()>idx+1){
+        if(ques.length()>idx+1){ // two character
             int num = Integer.parseInt(ques.substring(idx,idx+2));
             if(num<=26){
                 ans+=helper(ques,idx+2,dp);
             }
         }
-        
-    
-
         return dp[idx]=ans;
     }
 }
