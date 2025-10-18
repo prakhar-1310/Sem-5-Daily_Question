@@ -1,5 +1,6 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
         int dp[] = new int[s.length()];
         Arrays.fill(dp,-1);//-1 means not visited
         // 1 means true;
