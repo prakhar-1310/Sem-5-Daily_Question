@@ -1,6 +1,6 @@
 class Solution {
     public int mincostTickets(int[] days, int[] costs) {
-        int dp[][] = new int[days.length][366];
+        int dp[][] = new int[days.length][days[days.length-1]+29];
         for(int i[] : dp){
             Arrays.fill(i,-1);
         }
