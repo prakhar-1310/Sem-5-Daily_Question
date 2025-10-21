@@ -4,7 +4,7 @@ class Solution {
         for(int i:nums){
             max=Math.max(i,max);
         }
-        int freq[]=new int[max+k+1];
+        int freq[]=new int[max+1];
 
         for(int i : nums){
             freq[i]++;
@@ -21,8 +21,10 @@ class Solution {
                 continue;
             }
 
-            int left = Math.max(0,i-k);
-            int right = Math.min(i+k,max+k);
+            int left = Math.max(0,i-k); // left Range
+            int right = Math.min(i+k,max); // right range
+
+            // if target = num ; then [num-k, num+k] is the range of the numbers that can be converted into num
 
             int totalCount = freq[right]-(left==0 ? 0 : freq[left-1]);
             int targetCount = freq[i]-freq[i-1];
