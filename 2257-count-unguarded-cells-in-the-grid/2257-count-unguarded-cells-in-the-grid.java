@@ -1,47 +1,58 @@
-import java.util.*;
-
 class Solution {
-    void dfs(int r, int c, String dir, int[][] vis, Map<String, Integer> mp) {
-        int n = vis.length;
-        int m = vis[0].length;
-        if (r < 0 || c < 0 || r >= n || c >= m) return;
-        if (mp.containsKey(r + "," + c)) return;
-        vis[r][c] = 1;
+    public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
+        // 3 means guard
+        // 2 means wall
+        // 0 means not guarded
 
-        if (dir.equals("r")) dfs(r, c + 1, "r", vis, mp);
-        if (dir.equals("l")) dfs(r, c - 1, "l", vis, mp);
-        if (dir.equals("u")) dfs(r - 1, c, "u", vis, mp);
-        if (dir.equals("d")) dfs(r + 1, c, "d", vis, mp);
+        int mat[][] = new int [m][n];
+
+        for(int arr[] : guards){
+            int i = arr[0];
+            int j = arr[1];
+            mat[i][j]=3;
+        }
+
+        for(int arr[] : walls){
+            mat[arr[0]][arr[1]]=2;
+        }
+
+        for(int arr[] : guards){
+            helper(arr[0], arr[1], "up", mat);
+            helper(arr[0], arr[1], "down", mat);
+            helper(arr[0], arr[1], "left", mat);
+            helper(arr[0], arr[1], "right", mat);
+        }
+
+        
+
+        int cnt=0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(mat[i][j]==0){
+                    cnt++;
+                }
+            }
+        }
+
+        return cnt;
     }
 
-    public int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
-        int[][] vis = new int[m][n];
-        Queue<int[]> q = new LinkedList<>();
-        Map<String, Integer> mp = new HashMap<>();
-
-        for (int[] g : guards) {
-            q.add(g);
-            mp.put(g[0] + "," + g[1], 1);
-            vis[g[0]][g[1]] = 1;
+    public void helper(int i, int j, String dir, int mat[][]){
+        if(i<0|| i>=mat.length || j<0 || j>=mat[0].length || mat[i][j]==2){
+            return;
         }
-
-        for (int[] w : walls) {
-            mp.put(w[0] + "," + w[1], 1);
-            vis[w[0]][w[1]] = 1;
+        mat[i][j]=1;// mark cell guarded
+        if(dir.equals("up")){
+            helper(i-1,j,dir,mat);
         }
-
-        for (int[] g : guards) {
-            int r = g[0], c = g[1];
-            dfs(r, c + 1, "r", vis, mp);
-            dfs(r, c - 1, "l", vis, mp);
-            dfs(r + 1, c, "d", vis, mp);
-            dfs(r - 1, c, "u", vis, mp);
+        else if(dir.equals("down")){
+            helper(i+1,j,dir,mat);
         }
-
-        int cnt = 0;
-        for (int i = 0; i < m; i++)
-            for (int j = 0; j < n; j++)
-                if (vis[i][j] == 0) cnt++;
-        return cnt;
+        else if(dir.equals("left")){
+            helper(i,j-1,dir,mat);
+        }
+        else if(dir.equals("right")){
+            helper(i,j+1,dir,mat);
+        }
     }
 }
