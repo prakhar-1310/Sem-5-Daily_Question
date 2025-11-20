@@ -38,26 +38,26 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
         int result = Integer.MAX_VALUE;
-
+ 
         // Case 1: top + bottomLeft + bottomRight
         for (int rowSplit = 1; rowSplit < m; rowSplit++) {
             for (int colSplit = 1; colSplit < n; colSplit++) {
-                int top = minimumArea(0, rowSplit, 0, n, grid);
-                int bottomLeft = minimumArea(rowSplit, m, 0, colSplit, grid);
-                int bottomRight = minimumArea(rowSplit, m, colSplit, n, grid);
+                int top = minimumArea(0,rowSplit,0,n,grid);
+                int bottomLeft = minimumArea(rowSplit,m,0,colSplit,grid);
+                int bottomRight = minimumArea(rowSplit,m,colSplit,n,grid);
 
-                result = Math.min(result, top + bottomLeft + bottomRight);
+                result = Math.min(result, top+bottomLeft+bottomRight);
             }
         }
 
         // Case 2: topLeft + topRight + bottom
         for (int rowSplit = 1; rowSplit < m; rowSplit++) {
             for (int colSplit = 1; colSplit < n; colSplit++) {
-                int topLeft = minimumArea(0, rowSplit, 0, colSplit, grid);
-                int topRight = minimumArea(0, rowSplit, colSplit, n, grid);
-                int bottom = minimumArea(rowSplit, m, 0, n, grid);
+                int topLeft = minimumArea(0,rowSplit,0,colSplit,grid);
+                int topRight = minimumArea(0,rowSplit,colSplit,n,grid);
+                int bottom = minimumArea(rowSplit,m,0,n,grid);
 
-                result = Math.min(result, topLeft + topRight + bottom);
+                result = Math.min(result,topLeft+topRight+bottom);
             }
         }
 
@@ -71,7 +71,6 @@ class Solution {
                 result = Math.min(result, top + middle + bottom);
             }
         }
-
         return result;
     }
 
