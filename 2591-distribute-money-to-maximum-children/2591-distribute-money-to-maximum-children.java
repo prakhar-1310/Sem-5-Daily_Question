@@ -16,6 +16,11 @@ class Solution {
             count--;
         }
 
+        if (children == 0 && money > 0) {
+            count--;
+        }
+
+
         return count;
     }
 }
