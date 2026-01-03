@@ -14,13 +14,12 @@ class Solution {
 
         int ans = Integer.MAX_VALUE;
 
-        Queue<Pair>q = new LinkedList<>();
-        HashMap<Integer,Integer>visited = new HashMap<>(); // vtx:dist
+        
 
         for(int i=0;i<n;i++){
-            if(visited.containsKey(i)){
-                continue;
-            }
+            Queue<Pair>q = new LinkedList<>();
+            HashMap<Integer,Integer>visited = new HashMap<>(); // vtx:dist
+            
             q.add(new Pair(i,0));
 
             while(!q.isEmpty()){
