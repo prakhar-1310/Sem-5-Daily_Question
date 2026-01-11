@@ -21,7 +21,6 @@ class Solution {
         Stack<Integer>st = new Stack<>(); // will store indexes of the array height
 
         int area =0;
-
         for(int i=0;i<=heights.length;i++){
             int var=0;
             if(i<heights.length){
@@ -44,5 +43,4 @@ class Solution {
         }
         return area;
     }
-
 }
