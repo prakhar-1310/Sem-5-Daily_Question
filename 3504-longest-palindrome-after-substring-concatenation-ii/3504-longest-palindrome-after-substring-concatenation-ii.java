@@ -1,49 +1,75 @@
 class Solution {
     public int longestPalindrome(String s, String t) {
-        t = new StringBuilder(t).reverse().toString();
+        int n = s.length();  
+        int m = t.length();  
+        int maxLength = 0;   // Ans to be returned
         
-        int[] ss = lps(s), tt = lps(t);
-        int n = s.length(), m = t.length(), res = 0;
+        // dp[i][j] will represent the length of the longest palindromic subsequence
+        // that starts at s[i] and ends at t[j-1].
         int[][] dp = new int[n+1][m+1];
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
-                int a = 0;
-                if (s.charAt(i) == t.charAt(j)) {
-                    dp[i+1][j+1] = dp[i][j]+1;
-                    a = 1;
+
+        // Preprocessing for string s: 
+        // p[i] stores the length of the longest palindrome starting at index i in string s.
+        int[] p = new int[n+1];
+        for (int i = 0; i < n; i++) {
+            for(int j = n-1; j >= 0; j--) {
+                if(isPal(s, i, j)) {  // If substring s[i..j] is a palindrome
+                    p[i] = j - i + 1;  // Store the length of the palindrome starting at i
+                    break;
                 }
-                res = Math.max(res, 2*dp[i+1][j+1] + Math.max(ss[i+a], tt[j+a]));
             }
         }
-        return res;
-    }
 
-    
+        // Preprocessing for string t:
+        // q[i+1] stores the length of the longest palindrome ending at index i in string t.
+        int[] q = new int[m+1];
+        for (int i = 0; i < m; i++) {
+            for(int j = 0; j <= i; j++) {
+                if(isPal(t, j, i)) {  // If substring t[j..i] is a palindrome
+                    q[i+1] = i - j + 1;  // Store the length of the palindrome ending at i
+                    break;
+                }
+            }
+        }
 
-    private int[] lps(String s) {
-        int n = s.length(), res[] = new int[n+1];
-        for (int i = 0; i < n; ++i) {
-            for (int j = n-1; j >= i && res[i] < 2; --j) {
-                if (isPalindrome(s, i, j)) {
-                    res[i] = j-i+1;
+        // dp[n][0] = 0 for the case when no element is taken from s or t
+
+        // dp[n][i] means no elements are taken from string s but elements are taken from string t
+        for (int i = 1; i <= m; i++) {
+            dp[n][i] = q[i];  // Initialize the last row of dp using precomputed values from q
+        }
+
+        // dp[i][0] means no elements are taken from string t but elements are taken from string s
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = p[i];  // Initialize the first column of dp using precomputed values from p
+        }
+
+        // Fill the dp table: 
+        // Move in the left direction for s and right direction for t
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = 1; j <= m; j++) {
+                if (s.charAt(i) == t.charAt(j - 1)) {
+                    dp[i][j] = Math.max(p[i], q[j]);
+                    dp[i][j] = Math.max(dp[i][j], 2 + dp[i + 1][j - 1]);
                 } else {
-                    res[i] = 1;
+                    dp[i][j] = Math.max(p[i], q[j]);
                 }
+                
+                // Keep track of the maximum palindrome length found so far
+                maxLength = Math.max(maxLength, dp[i][j]);
             }
         }
-        return res;
+        return maxLength;
     }
-    
-    
-    private boolean isPalindrome(String s, int i, int j) {
-        int left = i;
-        int right = j;
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
+
+    // Helper method to check if a substring from index i to j in string s is a palindrome
+    private boolean isPal(String s, int i, int j) {
+        while (i <= j) {
+            if (s.charAt(i) != s.charAt(j)) {
                 return false;
             }
-            left++;
-            right--;
+            i++;
+            j--;
         }
         return true;
     }
