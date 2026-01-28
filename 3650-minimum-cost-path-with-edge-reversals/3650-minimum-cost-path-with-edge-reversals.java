@@ -1,36 +1,55 @@
 class Solution {
     public int minCost(int n, int[][] edges) {
-        List<List<int[]>> adj = new ArrayList<>();
-        for(int i = 0; i < n; i++){
-            adj.add(new ArrayList<>());
+        HashMap<Integer,HashMap<Integer,Integer>>map = new HashMap<>();
+        for(int i=0;i<n;i++){
+            map.put(i,new HashMap<>());
         }
-        for(int[] e : edges){
-            int u = e[0];
-            int v = e[1];
-            int w = e[2];
-            adj.get(u).add(new int[]{v, w});
-            adj.get(v).add(new int[]{u, 2 * w});
+        for(int i[] : edges){
+            int v1 = i[0];
+            int v2 = i[1];
+            int cost = i[2];
+            map.get(v1).put(v2,Math.min(map.get(v1).getOrDefault(v2,Integer.MAX_VALUE),cost));
+            map.get(v2).put(v1,Math.min(map.get(v2).getOrDefault(v1,Integer.MAX_VALUE),2*cost));
         }
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
-        pq.add(new int[]{0, 0});
-        int[] dis = new int[n];
-        Arrays.fill(dis, Integer.MAX_VALUE);
+
+        PriorityQueue<Pair>pq = new PriorityQueue<>((a,b)->{
+            return a.cost-b.cost;
+        });
+        pq.add(new Pair(0,0));
+
+        // HashSet<Integer>visited = new HashSet<>(); // not single way to reach
+
+        int dist[] = new int[n];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[0]=0;
+
         while(!pq.isEmpty()){
-            int[] curr = pq.poll();
-            int node = curr[0];
-            int d = curr[1];
-            if(dis[node] < d){
+            Pair rm = pq.poll();
+
+            if(dist[rm.vtx]<rm.cost){
                 continue;
             }
-            for(int[] nbr : adj.get(node)){
-                int nn = nbr[0];
-                int wt = nbr[1];
-                if(d + wt < dis[nn]){
-                    dis[nn] = d + wt;
-                    pq.add(new int[]{nn, dis[nn]});
+
+            dist[rm.vtx] = rm.cost;
+
+            for(int ngbr : map.get(rm.vtx).keySet()){
+                if(dist[ngbr]>rm.cost+map.get(rm.vtx).get(ngbr)){
+                    dist[ngbr] = rm.cost+map.get(rm.vtx).get(ngbr);
+                    pq.add(new Pair(ngbr, dist[ngbr]));
                 }
             }
         }
-        return dis[n - 1] == Integer.MAX_VALUE ? -1 : dis[n - 1]; 
+
+        return dist[n-1]==Integer.MAX_VALUE ? -1:dist[n-1];
+        
+    }
+
+    class Pair{
+        int vtx;
+        int cost;
+        public Pair(int vtx, int cost){
+            this.vtx = vtx;
+            this.cost = cost;
+        }
     }
 }
