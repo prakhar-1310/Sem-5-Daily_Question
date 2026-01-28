@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/count-number-of-texts">2266. Count Number of Texts</a></h2><h3>Medium</h3><hr><p>Alice is texting Bob using her phone. The <strong>mapping</strong> of digits to letters is shown in the figure below.</p>
+<h2><a href="https://leetcode.com/problems/count-number-of-texts/">2266. Count Number of Texts</a></h2><h3>Medium</h3><hr><p>Alice is texting Bob using her phone. The <strong>mapping</strong> of digits to letters is shown in the figure below.</p>
 <img alt="" src="https://assets.leetcode.com/uploads/2022/03/15/1200px-telephone-keypad2svg.png" style="width: 200px; height: 162px;" />
 <p>In order to <strong>add</strong> a letter, Alice has to <strong>press</strong> the key of the corresponding digit <code>i</code> times, where <code>i</code> is the position of the letter in the key.</p>
 
