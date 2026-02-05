@@ -1,23 +1,21 @@
 class Solution {
-	// store transaction in an object for ease of handling and cleaner code
     class Transaction{
         String name;
         int time;
         int amount;
-        String city;
+        String place;
         public Transaction(String line){
-			// split the string and parse it
-            String[] split = line.split(",");
-            name = split[0];
-            time = Integer.parseInt(split[1]);
-            amount = Integer.parseInt(split[2]);
-            city = split[3];
+            String[] arr = line.split(",");
+            name = arr[0];
+            time = Integer.parseInt(arr[1]);
+            amount = Integer.parseInt(arr[2]);
+            place = arr[3];
         }
     }
     public List<String> invalidTransactions(String[] transactions) {
         List<String> invalid = new ArrayList<>();
-        Map<String, List<Transaction>> map = new HashMap<>();
-		// go through entire transaction list and create object and store in map using 'name' as key
+        HashMap<String, List<Transaction>> map = new HashMap<>();
+		
         for(String transaction : transactions){
             Transaction t = new Transaction(transaction);
             map.putIfAbsent(t.name, new ArrayList<>());
@@ -30,15 +28,13 @@ class Solution {
 			// if transaction is not valid, add to final result
 			// (notice we are passing to the function only the list of transactions for that specific name
 			// we only care about transactions for the same name)
-            if(!isValid(t, map.getOrDefault(t.name, new ArrayList<>()))){
+            if(!isValid(t, map.get(t.name))){
                 invalid.add(transaction);
             }
         }
         return invalid;
     }
     public boolean isValid(Transaction t, List<Transaction> list){
-		// if the transaction is greater than 1000, 
-		/// we hit the first condition in the description so return the transaction as false
         if(t.amount > 1000){
 			return false;
 		}
@@ -47,7 +43,7 @@ class Solution {
 		// and if the transaction is not in the same city
 		// we hit the second condition return the transaction as false
         for(Transaction ta : list){
-            if(Math.abs(ta.time - t.time) <= 60 && !ta.city.equals(t.city)){
+            if(Math.abs(ta.time - t.time) <= 60 && !ta.place.equals(t.place)){
 				return false;
 			}
         }
