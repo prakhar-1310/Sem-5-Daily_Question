@@ -15,27 +15,26 @@
  */
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        // since inorder traversal gives us sorted node
-        // so kth smallest means kth value
-
         helper(root,k);
-        return node.val;
+        return nn.val;
     }
-    TreeNode node = null;
-    int count=1;
-    public void helper(TreeNode root, int k){
-        if(root==null){
+    TreeNode nn = new TreeNode();
+    int cnt=1;
+
+    public void helper(TreeNode node, int k){
+        if(node == null){
             return;
         }
-        helper(root.left,k);
-        
-        if(count==k){
-            node = root;
-            count++;
-            return ;
-        }
-        count++;
-        helper(root.right,k);
 
+        helper(node.left,k);
+
+        if(k==cnt){
+            nn = node;
+            cnt++;
+            return;
+        }
+        cnt++;
+
+        helper(node.right,k);
     }
 }
