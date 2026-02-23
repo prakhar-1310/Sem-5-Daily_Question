@@ -4,27 +4,26 @@ class Solution {
         for(int i=0;i<n;i++){
             map.put(i,new HashMap<>());
         }
-        int mod = 1000000007;
+        for(int e[] : roads){
+            int v1 = e[0];
+            int v2 = e[1];
+            long c = e[2];
 
-        for(int i[] : roads){
-            int v1 = i[0];
-            int v2 = i[1];
-            long cost = i[2];
-
-            map.get(v1).put(v2,cost);
-            map.get(v2).put(v1,cost);
+            map.get(v1).put(v2,c);
+            map.get(v2).put(v1,c);
         }
-        PriorityQueue<Pair>pq= new PriorityQueue<>((a,b)->{
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b)->{
             return Long.compare(a.cost,b.cost);
         });
-        pq.add(new Pair(0,0));
-
-        long dist[] = new long [n];
+        long dist[] = new long[n];
         Arrays.fill(dist,Long.MAX_VALUE);
-        dist[0]=0L;
+        dist[0]=0;
 
         long ways[] = new long[n];
-        ways[0]=1L;
+        ways[0]=1;
+
+        pq.add(new Pair(0,0));
 
         while(!pq.isEmpty()){
             Pair rm = pq.poll();
@@ -34,14 +33,13 @@ class Solution {
             }
 
             for(int ngbr : map.get(rm.vtx).keySet()){
-                long newCost = map.get(rm.vtx).get(ngbr)+rm.cost;
-                if(dist[ngbr]>newCost){
-                    dist[ngbr]=newCost;
+                if(dist[ngbr]>rm.cost+map.get(rm.vtx).get(ngbr)){
+                    dist[ngbr]=rm.cost+map.get(rm.vtx).get(ngbr);
                     ways[ngbr] = ways[rm.vtx];
-                    pq.add(new Pair(ngbr,newCost));
+                    pq.add(new Pair(ngbr, dist[ngbr]));
                 }
-                else if(dist[ngbr]==newCost){
-                    ways[ngbr] = (ways[ngbr]+ways[rm.vtx])%mod;
+                else if(dist[ngbr]==rm.cost+map.get(rm.vtx).get(ngbr)){
+                    ways[ngbr]=(ways[ngbr]+ways[rm.vtx])%1000_000_007;
                 }
             }
         }
@@ -50,11 +48,11 @@ class Solution {
     }
 
     class Pair{
-        int vtx;
         long cost;
-        public Pair(int vtx,long cost){
-            this.vtx = vtx;
+        int vtx;
+        public Pair(int vtx, long cost){
             this.cost = cost;
+            this.vtx = vtx;
         }
     }
 }
