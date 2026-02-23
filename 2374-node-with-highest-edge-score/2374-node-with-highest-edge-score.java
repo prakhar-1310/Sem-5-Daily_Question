@@ -1,21 +1,31 @@
 class Solution {
     public int edgeScore(int[] edges) {
-        HashMap<Integer,Long>map = new HashMap<>();
-        for(int i=0;i<edges.length;i++){
-            int vtx = edges[i];
-            long score = i;
-            map.put(vtx,map.getOrDefault(vtx,0L)+score);
+        HashMap<Integer,List<Integer>>map = new HashMap<>();
+        for(int i =0;i<edges.length;i++){
+            int v1 = i;
+            int v2 = edges[i];
+            if(!map.containsKey(v2)){
+                map.put(v2, new ArrayList<>());
+            }
+            map.get(v2).add(v1);
         }
 
-        int ans=0;
-        long max=0;
+        long max=Integer.MIN_VALUE;
+        int node =0;
         for(int i : map.keySet()){
-            if(max<map.get(i)){
-                max = map.get(i);
-                ans = i;
+            long sum=0;
+            for(int j : map.get(i)){
+                sum+=j;
+            }
+            if(sum>max){
+                max = sum;
+                node = i;
+            }
+            else if(sum==max && node>i){
+                node=i;
             }
         }
 
-        return ans;
+        return node;
     }
 }
