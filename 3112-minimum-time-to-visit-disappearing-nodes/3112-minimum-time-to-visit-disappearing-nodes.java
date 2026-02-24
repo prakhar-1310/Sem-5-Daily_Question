@@ -1,56 +1,46 @@
 class Solution {
     public int[] minimumTime(int n, int[][] edges, int[] disappear) {
-        HashMap<Integer, HashMap<Integer,Integer>>map = new HashMap<>();
-
+        HashMap<Integer,HashMap<Integer,Integer>>map = new HashMap<>();
         for(int i=0;i<n;i++){
-            map.put(i,new HashMap<>());
+            map.put(i, new HashMap<>());
         }
 
         for(int e[] : edges){
-            int e1 = e[0];
-            int e2 = e[1];
-            int cost = e[2];
-            map.get(e1).put(e2,Math.min(cost,map.get(e1).getOrDefault(e2,Integer.MAX_VALUE)));
-            map.get(e2).put(e1,Math.min(cost,map.get(e2).getOrDefault(e1,Integer.MAX_VALUE)));
+            int v1 = e[0];
+            int v2 = e[1];
+            int c = e[2];
+            map.get(v1).put(v2, Math.min(c, map.get(v1).getOrDefault(v2,Integer.MAX_VALUE)));
+            map.get(v2).put(v1, Math.min(c, map.get(v2).getOrDefault(v1,Integer.MAX_VALUE)));
         }
 
-        HashSet<Integer>visited = new HashSet<>();
-        PriorityQueue<Pair>pq = new PriorityQueue<>((a,b)->{
-            return a.cost-b.cost;
-        });
-        pq.add(new Pair(0,0));
         int dist[] = new int[n];
         Arrays.fill(dist,-1);
         dist[0]=0;
 
-        while(!pq.isEmpty()){
-            // remove
-            Pair rm = pq.poll();
+        PriorityQueue<Pair>pq = new PriorityQueue<>((a,b)->{
+            return a.cost-b.cost;
+        });
+        
+        pq.add(new Pair(0,0));
+        HashSet<Integer>set = new HashSet<>();
 
-            // check
-            if(visited.contains(rm.vtx)){
+        while(!pq.isEmpty()){
+            Pair rm = pq.poll();
+            if(set.contains(rm.vtx))continue;
+            set.add(rm.vtx);
+            if(rm.cost>=disappear[rm.vtx]){
                 continue;
             }
-            
-            // mark visited
-            visited.add(rm.vtx);
+            dist[rm.vtx]=rm.cost;
 
-            // self work
-            if(rm.cost>=disappear[rm.vtx]){
-                continue;  
-            }
-            dist[rm.vtx] = rm.cost;
-
-            // add ngbrs
             for(int ngbr : map.get(rm.vtx).keySet()){
-                if(!visited.contains(ngbr)){
-                    pq.add(new Pair(ngbr, rm.cost+map.get(rm.vtx).get(ngbr)));
+                if(!set.contains(ngbr)){
+                    pq.add(new Pair(ngbr, map.get(rm.vtx).get(ngbr)+rm.cost));
                 }
             }
         }
 
         return dist;
-        
     }
 
     class Pair{
