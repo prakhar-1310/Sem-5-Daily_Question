@@ -1,45 +1,26 @@
 class Solution {
     public int compress(char[] chars) {
-        int cnt=1;
-        char prev = chars[0];
-        int ans=0;
-        int idx=0;
-        for(int i=1;i<chars.length;i++){
-            char ch = chars[i];
-            if(prev==ch){
-                cnt++;
-            }
-            else{
-                ans++;
-                chars[idx++]=prev;
-                if(cnt!=1){
-                    ans+=(cnt+"").length();
-                    int j=(cnt+"").length();
-                    int temp = j;
-                    while(cnt>0){
-                        chars[idx+j-1]=(char)(cnt%10+'0');
-                        cnt/=10;
-                        j--;
-                    }
-                    idx+=temp;
+        // String s = Array.toString(chars);
+        int k=0;
+        for (int i=0;i<chars.length;){
+            int count=1;
+            for (int j=i+1;j<chars.length;j++){
+                if (chars[i]==chars[j]){
+                    count++;
                 }
-                cnt=1;
-                prev=ch;
+                else{
+                    break;
+                }
+            }
+            chars[k]=chars[i];
+            k++;
+            i+=count;
+            if (count > 1) {
+                for (char c : Integer.toString(count).toCharArray()) {
+                    chars[k++] = c;
+                }
             }
         }
-
-        ans++;
-                chars[idx++]=prev;
-                if(cnt!=1){
-                    ans+=(cnt+"").length();
-                    int j=(cnt+"").length();
-                    while(cnt>0){
-                        chars[idx+j-1]=(char)(cnt%10+'0');
-                        cnt/=10;
-                        j--;
-                    }
-                }
-
-        return ans;
+        return k;
     }
 }
