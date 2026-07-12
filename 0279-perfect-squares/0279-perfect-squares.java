@@ -1,28 +1,18 @@
 class Solution {
     public int numSquares(int n) {
-        int dp[][] = new int[n+1][(int)Math.sqrt(n)+1];
-        for(int i[] : dp){
-            Arrays.fill(i, -1);
-        }
-        return helper(n, dp, 1);
-    }
+        int dp[] = new int[n+1];
+        dp[0]=0;
+        dp[1]=1;
 
-    public int helper(int n, int dp[][], int i){
-        if(n==0){
-            return 0;
-        }
-        if(n<0 || i*i>n){
-            return Integer.MAX_VALUE/2;
-        }
-        if(dp[n][i]!=-1){
-            return dp[n][i];
+        for(int i=2;i<=n;i++){
+            int min = Integer.MAX_VALUE;
+            for(int j=1;j*j<=i;j++){
+                int rem = i-j*j;
+                min = Math.min(min, dp[rem]);
+            }
+            dp[i]=min+1;
         }
 
-        // take
-        int opt1 = 1+helper(n-(i*i), dp, i);
-        // skip
-        int opt2 = helper(n, dp, i+1);
-
-        return dp[n][i]=Math.min(opt1, opt2);
+        return dp[n];
     }
 }
