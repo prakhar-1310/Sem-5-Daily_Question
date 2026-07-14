@@ -1,9 +1,11 @@
 class Solution {
-    
+    static String arr[] = new String[30];
     public String countAndSay(int n) {
-        String arr[] = new String[n];
+        if(arr[n-1]!=null){
+            return arr[n-1];
+        }
         arr[0]="1";
-        for(int i=1;i<n;i++){
+        for(int i=1;i<30;i++){
             String s = arr[i-1];
             StringBuilder sb = new StringBuilder();
             int j=0;
