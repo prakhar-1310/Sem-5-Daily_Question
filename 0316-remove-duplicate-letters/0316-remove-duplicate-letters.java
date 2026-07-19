@@ -9,15 +9,16 @@ class Solution {
         HashSet<Character>set = new HashSet<>();
         for(int i=0;i<s.length();i++){
             char ch = s.charAt(i);
-            while(!st.isEmpty() && st.peek()>ch && lastInd[st.peek()-'a']>i && !set.contains(ch)){
+            if(set.contains(ch))continue;
+            while(!st.isEmpty() && st.peek()>ch && lastInd[st.peek()-'a']>i){
                 set.remove(st.peek());
                 st.pop();
             }
 
-            if(!set.contains(ch)){
+            
                 set.add(ch);
                 st.push(ch);
-            }
+            
             
         }
 
