@@ -3,6 +3,8 @@ class Solution {
         List<List<Integer>>ll = new ArrayList<>();
         int n = grid.length;
         int m = grid[0].length;
+        int tot=m*n;
+        k=k%tot;
 
         if(k==0){
             for(int i=0;i<n;i++){
