@@ -32,13 +32,9 @@ class Solution {
             list.add(i);
         }
         System.out.println(bug);
-        for(int i=0;i<n;i++){
-            if(!bug.contains(i) && map.containsKey(i)){
-                for(int ngbr : map.get(i)){
-                    if(bug.contains(ngbr)){
-                        return list;
-                    }
-                }
+        for(int i[] : invocations){
+            if(!bug.contains(i[0]) && bug.contains(i[1])){
+                return list;
             }
         }
 
