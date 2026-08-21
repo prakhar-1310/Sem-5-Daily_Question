@@ -35,16 +35,15 @@ class Solution {
     }
 
     public long lcm(int a, int b){
-        long max = Math.max(a,b);
-        long min = Math.min(a,b);
-        long tem = max;
-        int i=2;
-        while(max%min!=0){
-            max = tem*i;
-            i++;
+        return 1L*a*b / gcd(a,b);
+
+    }
+
+    public long gcd(int a, int b){
+        if(b==0){
+            return a;
         }
 
-        return max;
-
+        return gcd(b, a%b);
     }
 }
