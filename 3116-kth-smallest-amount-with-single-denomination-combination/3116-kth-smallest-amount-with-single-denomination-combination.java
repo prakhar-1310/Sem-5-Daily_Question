@@ -23,24 +23,25 @@ class Solution {
         return ans;
     }
 
-    public boolean check(int arr[], int k, long x){
+    public boolean check(int arr[], int k, long val){
         long count = 0;
         int m = arr.length;
-        for (int mask = 1; mask < (1 << m); mask++) {
-            long lcm = 1;
-            int bits = 0;
-            for (int i = 0; i < m; i++) {
-
-                if ((mask & (1 << i)) != 0) {
-                    bits++;
-                    lcm = lcm(lcm, arr[i]);
+        for(int mask=1; mask<(1<<m);mask++){
+            int bit=0;
+            long lcm=1;
+            for(int i=0;i<m;i++){
+                if((mask&(1<<i))!=0){
+                    bit++;
+                    lcm = lcm(lcm,arr[i]);
                 }
             }
 
-            if (bits % 2 == 1)
-                count += x / lcm;
-            else
-                count -= x / lcm;
+            if(bit%2==0){
+                count-=val/lcm;
+            }
+            else{
+                count+=val/lcm;
+            }
         }
 
         return count>=k;
