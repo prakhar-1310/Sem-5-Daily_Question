@@ -5,7 +5,6 @@ class Solution {
         long left = 2;
         long right = 1L*n*Math.min(a,b);
         long lcm = lcm(a,b);
-        System.out.println(lcm);
         long ans=-1;
 
         while(left<=right){
@@ -20,13 +19,11 @@ class Solution {
             }
         }
 
-        System.out.println(ans);
-
         return (int)(ans%mod);
     }
 
     public boolean check(int a, int b, int n, long val, long lcm){
-        int cnt=0;
+        long cnt=0;
         cnt+= val/a;
         cnt+= val/b;
         cnt-= val/lcm;
