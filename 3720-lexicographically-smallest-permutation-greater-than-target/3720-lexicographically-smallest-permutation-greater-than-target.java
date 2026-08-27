@@ -25,9 +25,7 @@ class Solution {
         }
         int flag=0;
         if(idx==-1){
-            System.out.println("hii");
-            
-            
+
                 for(int i=target.length()-1;i>=0;i--){
                     char chi = target.charAt(i);
                     for(char c: list){
