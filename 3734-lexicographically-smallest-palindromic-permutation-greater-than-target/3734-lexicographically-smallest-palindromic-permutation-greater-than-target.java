@@ -15,7 +15,6 @@ class Solution {
             freq[i]= freq[i]/2;
         }
         if(cnt>1)return "";
-        System.out.println(mid);
         StringBuilder sb = new StringBuilder();
         for(int i=0;i<target.length()/2;i++){
             char ch = target.charAt(i);
