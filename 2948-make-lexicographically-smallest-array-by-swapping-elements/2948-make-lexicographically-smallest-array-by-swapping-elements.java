@@ -41,9 +41,6 @@ class Solution {
 
         Collections.sort(idx);
 
-        System.out.println(idx);
-        System.out.println(list);
-
         for(int i=0;i<idx.size();i++){
             ans[idx.get(i)]=list.get(i);
         }
