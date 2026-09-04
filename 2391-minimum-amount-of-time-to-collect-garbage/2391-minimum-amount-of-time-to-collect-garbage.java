@@ -1,39 +1,35 @@
 class Solution {
     public int garbageCollection(String[] garbage, int[] travel) {
         int tot=0;
-        for(int j=0;j<3;j++){
-            String tar="";
-            if(j==0){
-                tar="G";
-            }
-            else if(j==1)tar="P";
-            else tar="M";
-
-            int trav=0;
-            int perHouse=0;
+        int lastG=0;
+        int lastP=0;
+        int lastM=0;
         
-            for(int i=0;i<garbage.length;i++){
-                String s = garbage[i];
+        for(int i=0;i<garbage.length;i++){
+            tot+=garbage[i].length();
 
-                for(char ch : s.toCharArray()){
-                    if((ch+"").equals(tar)){
-                        perHouse++;
-                    }
-                }
+            if(garbage[i].contains("G")){
+                lastG=i;
+            }
 
-                if(perHouse!=0){
-                    tot+=perHouse;
-                    tot+=trav;
-                    trav=0;
-                    perHouse=0;
-                    //System.out.println(tot);
-                }
+            if(garbage[i].contains("M")){
+                lastM=i;
+            }
 
-                if(i!=garbage.length-1){
-                    trav+=travel[i];
-                }
+            if(garbage[i].contains("P")){
+                lastP=i;
             }
         }
+
+        int pref[] = new int[travel.length+1];
+        pref[0]=0;
+        for(int i=1;i<pref.length;i++){
+            pref[i]=pref[i-1]+travel[i-1];
+        }
+
+        tot+=pref[lastG];
+        tot+=pref[lastP];
+        tot+=pref[lastM];
 
         return tot;
     }
