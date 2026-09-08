@@ -2,7 +2,7 @@ class Solution {
     long mod = 1000000007;
     public int colorTheGrid(int m, int n) {
         List<String>list=new ArrayList<>();
-        row1("", m, list);
+        col1("", m, list);
 
         long dp[][] = new long[list.size()][n];
         for(long i[] : dp){
@@ -47,30 +47,28 @@ class Solution {
         return dp[prevInd][colLeft]=ans;
     }
 
-    public void row1(String ans, int m, List<String>list){
+    public void col1(String ans, int m, List<String>list){
         if(ans.length()==m){
             list.add(ans);
             return;
         }
 
         if(ans.length()==0){
-            row1(ans+"R", m, list);
-            row1(ans+"G", m, list);
-            row1(ans+"B", m, list);
+            col1(ans+"R", m, list);
+            col1(ans+"G", m, list);
+            col1(ans+"B", m, list);
         }
         else if(ans.charAt(ans.length()-1)=='R'){
-            row1(ans+"G", m, list);
-            row1(ans+"B", m, list);
+            col1(ans+"G", m, list);
+            col1(ans+"B", m, list);
         }
         else if(ans.charAt(ans.length()-1)=='G'){
-            row1(ans+"R", m, list);
-            row1(ans+"B", m, list);
+            col1(ans+"R", m, list);
+            col1(ans+"B", m, list);
         }
         else if(ans.charAt(ans.length()-1)=='B'){
-            row1(ans+"G", m, list);
-            row1(ans+"R", m, list);
+            col1(ans+"G", m, list);
+            col1(ans+"R", m, list);
         }
-
-
     }
 }
