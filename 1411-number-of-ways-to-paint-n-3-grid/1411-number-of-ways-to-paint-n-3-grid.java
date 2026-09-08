@@ -1,28 +1,29 @@
 class Solution {
     long mod = 1000000007;
     public int numOfWays(int n) {
-        int m =3;
+        int row = n;
+        int col = 3;
         List<String>list=new ArrayList<>();
-        row1("", m, list);
+        row1("", col, list);
 
-        long dp[][] = new long[list.size()][n];
+        long dp[][] = new long[list.size()][row];
         for(long i[] : dp){
             Arrays.fill(i, -1);
         }
 
         long tot=0;
         for(int i=0;i<list.size();i++){
-            tot= (tot+helper(i, n-1, list, dp))%mod;
+            tot= (tot+helper(i, row-1, list, dp))%mod;
         }
 
         return (int)((tot+mod)%mod);
     }
 
-    public long helper(int prevInd, int colLeft, List<String>list, long dp[][]){
-        if(colLeft==0)return 1;
+    public long helper(int prevInd, int rowLeft, List<String>list, long dp[][]){
+        if(rowLeft==0)return 1;
 
-        if(dp[prevInd][colLeft]!=-1){
-            return dp[prevInd][colLeft];
+        if(dp[prevInd][rowLeft]!=-1){
+            return dp[prevInd][rowLeft];
         }
 
         String prev=list.get(prevInd);
@@ -40,36 +41,36 @@ class Solution {
             }
 
             if(flag==0){
-                long temp =helper(i, colLeft-1, list, dp)%mod;
+                long temp =helper(i, rowLeft-1, list, dp)%mod;
                 ans = (ans+temp)%mod;
             }
         }
 
-        return dp[prevInd][colLeft]=ans;
+        return dp[prevInd][rowLeft]=ans;
     }
 
-    public void row1(String ans, int m, List<String>list){
-        if(ans.length()==m){
+    public void row1(String ans, int col, List<String>list){
+        if(ans.length()==col){
             list.add(ans);
             return;
         }
 
         if(ans.length()==0){
-            row1(ans+"R", m, list);
-            row1(ans+"G", m, list);
-            row1(ans+"B", m, list);
+            row1(ans+"R", col, list);
+            row1(ans+"G", col, list);
+            row1(ans+"B", col, list);
         }
         else if(ans.charAt(ans.length()-1)=='R'){
-            row1(ans+"G", m, list);
-            row1(ans+"B", m, list);
+            row1(ans+"G", col, list);
+            row1(ans+"B", col, list);
         }
         else if(ans.charAt(ans.length()-1)=='G'){
-            row1(ans+"R", m, list);
-            row1(ans+"B", m, list);
+            row1(ans+"R", col, list);
+            row1(ans+"B", col, list);
         }
         else if(ans.charAt(ans.length()-1)=='B'){
-            row1(ans+"G", m, list);
-            row1(ans+"R", m, list);
+            row1(ans+"G", col, list);
+            row1(ans+"R", col, list);
         }
     }
 }
