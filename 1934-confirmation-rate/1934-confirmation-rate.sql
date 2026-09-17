@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-select S.user_id, ROUND(COALESCE(SUM(C.action = 'confirmed') / COUNT(C.time_stamp),0),2)
+select S.user_id, ROUND(ifnull(SUM(C.action = 'confirmed') / COUNT(C.time_stamp),0),2)
 as confirmation_rate
 from Signups S
 left join Confirmations C
