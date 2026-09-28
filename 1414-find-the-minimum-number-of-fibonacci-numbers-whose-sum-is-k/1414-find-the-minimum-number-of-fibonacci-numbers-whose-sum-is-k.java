@@ -14,22 +14,17 @@ class Solution {
             a=b;
             b=c;
         }
+        int cnt=0;
 
-        int cnt=1;
-        k-=list.get(list.size()-1);
-
-        while(k!=0){
-            int curr=0;
-            for(int i : list){
-                if(i>k){
-                    k-=curr;
-                    cnt++;
+        for(int i=list.size()-1;i>=0;i--){
+            if(k>=list.get(i)){
+                k-=list.get(i);
+                cnt++;
+                if(k==0){
                     break;
                 }
-                curr=i;
             }
         }
-
         return cnt;
     }
 }
