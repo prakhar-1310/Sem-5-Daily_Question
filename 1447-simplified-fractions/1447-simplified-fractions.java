@@ -11,7 +11,7 @@ class Solution {
             }
             if(deno>n)break;
 
-            if(isSimplified(num, deno)){
+            if(gcd(num, deno)==1){
                 String tem = num+"/"+deno;
                 ans.add(tem);
             }
@@ -21,13 +21,10 @@ class Solution {
         return ans;
     }
 
-    public boolean isSimplified(int num, int deno){
-        for(int i=2; i<deno;i++){
-            if(num%i==0 && deno%i==0){
-                return false;
-            }
+    public int gcd(int a, int b){
+        if(b==0){
+            return a;
         }
-
-        return true;
+        return gcd(b, a%b);
     }
 }
