@@ -1,19 +1,22 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> ll = new ArrayList<>();
-        Parentheses (n,0,0,"",ll);
-        return ll;
+        List<String>list = new ArrayList<>();
+        helper(n,list,"",0,0);
+        return list;
     }
-    public static void Parentheses (int n, int closed, int open, String ans, List<String>ll) {
-		if (open == n && closed == n) {
-			ll.add(ans);
-			return;
-		}
-		if (open>n || open<closed) {
-			return;
-		}
-		Parentheses (n, closed,open+1, ans+"(",ll);
-		Parentheses (n, closed+1,open, ans+")",ll);
-		
-	}
+
+    public void helper(int n, List<String>list, String ans, int open, int close){
+        if(open==n && close==n){
+            list.add(ans);
+            return;
+        }
+        
+        if(open>n || open<close){
+            return;
+        }
+
+        helper(n, list, ans+"(", open+1,close);
+        helper(n,list,ans+")",open,close+1);
+        
+    }
 }
