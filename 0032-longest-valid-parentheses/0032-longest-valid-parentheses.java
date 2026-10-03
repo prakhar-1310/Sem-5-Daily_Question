@@ -3,25 +3,21 @@ class Solution {
         int n = s.length();
         
         int ans=0;
+        Stack<Integer>st = new Stack<>();
+        st.push(-1);
         
         for(int i=0;i<n;i++){
-            int op=0;
-            int cl=0;
-            if(n-i<=ans)return ans;
-            for(int j=i;j<n;j++){
-                if(s.charAt(j)=='('){
-                    op++;
+            if(s.charAt(i)=='('){
+                st.push(i);
+            }
+            else{
+                st.pop();
+
+                if(st.isEmpty()){
+                    st.push(i);
                 }
                 else{
-                    cl++;
-                }
-
-                if(cl>op){
-                    break;
-                }else if(op-cl>n-j)break;
-
-                if(op==cl){
-                    ans = Math.max(ans, j-i+1);
+                    ans = Math.max(ans, i-st.peek());
                 }
             }
         }
