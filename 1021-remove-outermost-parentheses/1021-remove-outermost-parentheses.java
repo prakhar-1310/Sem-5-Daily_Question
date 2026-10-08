@@ -6,17 +6,16 @@ class Solution {
 
         for(char ch : s.toCharArray()){
             if(ch=='('){
-                if(!st.isEmpty()){
+                st.push(ch);
+                if(st.size()>1){
                     sb.append(ch);
                 }
-                st.push(ch);
             }
             else{
-                st.pop();
-                if(!st.isEmpty()){
+                if(st.size()>1){
                     sb.append(ch);
                 }
-                //st.push(ch);
+                st.pop();
             }
         }
 
