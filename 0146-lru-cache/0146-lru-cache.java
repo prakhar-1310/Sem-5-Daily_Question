@@ -1,35 +1,73 @@
 class LRUCache {
-    HashMap<Integer,Integer>map;
-    int size;
-    List<Integer>list;
+
+    class Node{
+        Node prev;
+        Node next;
+        int key;
+        int val;
+
+        public Node(int key, int val){
+            this.key = key;
+            this.val = val;
+        }
+    }
+
+    HashMap<Integer, Node>map;
+    int n;
+    Node head;
+    Node tail;
 
     public LRUCache(int capacity) {
         map = new HashMap<>();
-        this.size = capacity;
-        list=new ArrayList<>();
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
+        head.next = tail;
+        tail.prev = head;
+        n = capacity;
+    }
+
+    public void remove(Node node){
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    public void insert(Node node){
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+        node.prev = head;
     }
     
     public int get(int key) {
         if(map.containsKey(key)){
-            list.remove(Integer.valueOf(key));
-            list.add(key);
-            return map.get(key);
+            Node node = map.get(key);
+            remove(node);
+            insert(node);
+            return node.val;
         }
-        else{
-            return -1;
-        }
+
+        return -1;
+        
     }
     
     public void put(int key, int value) {
         if(map.containsKey(key)){
-            list.remove(Integer.valueOf(key));
+            Node temp = map.get(key);
+            remove(temp);
+            map.remove(key);
+            n++;
         }
-        else if(map.size()==size){
-            int lru = list.remove(0);
-            map.remove(lru);
+        else if(n==0){
+            Node lru = tail.prev;
+            remove(lru);
+            map.remove(lru.key);
+            n++;
         }
-        list.add(key);
-        map.put(key, value);
+
+        Node node = new Node(key, value);
+        insert(node);
+        map.put(key, node);
+        n--;
     }
 }
 
