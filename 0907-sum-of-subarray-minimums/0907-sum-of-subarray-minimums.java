@@ -9,7 +9,8 @@ class Solution {
             while(!st.isEmpty() && (i == n || arr[st.peek()] >= arr[i])){
                 int mid = st.pop();
                 int left = st.isEmpty() ? -1 : st.peek();
-                long cnt = (long)(mid-left) * (i-mid);
+                int right=i;
+                long cnt = (long)(mid-left) * (right-mid);
                 long temp = (cnt*arr[mid])%mod;
                 mnSum = (mnSum+temp)%mod;
             }
