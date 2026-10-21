@@ -34,10 +34,8 @@ class Solution {
 
         if(f || l) return 1;
 
-        // if first one is largest Or last one is smallest
-        // and occurence of smallest or largest is more then 1
-        // then 2 opr
-        // other wise 3
+        // (one and only largest character at first) and (one and only smallest       character at last) -> return 3
+        // otherwise return  2
 
         first = s.charAt(0);
         f = true;
